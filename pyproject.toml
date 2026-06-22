@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=77", "wheel", "packaging>=24.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safe-openai-streaming"
+version = "0.1.0"
+description = "Fault-tolerant streaming wrapper for the official OpenAI Python SDK."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Safe OpenAI Streaming Contributors" }
+]
+keywords = ["openai", "streaming", "sse", "httpx", "fault-tolerant", "sdk"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "openai>=2.29,<2.44",
+  "httpx>=0.27,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "build>=1",
+]
+
+[tool.setuptools]
+packages = ["safe_openai"]
+
+[tool.setuptools.package-data]
+safe_openai = ["py.typed", "__init__.pyi"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not integration'"
+markers = [
+  "integration: live tests that require OPENAI_API_KEY and may call external services",
+]
